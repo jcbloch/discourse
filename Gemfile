@@ -42,6 +42,8 @@ gem 'mail', require: false
 gem 'mini_mime'
 gem 'mini_suffix'
 
+gem 'mongo'
+
 gem 'redis'
 
 # This is explicitly used by Sidekiq and is an optional dependency.

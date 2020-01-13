@@ -36,6 +36,8 @@ gem 'sprockets', '3.7.2'
 # allows us to precompile all our templates in the unicorn master
 gem 'actionview_precompiler', require: false
 
+gem 'dotenv-rails', groups: [:development, :test]
+
 gem 'seed-fu'
 
 gem 'mail', require: false

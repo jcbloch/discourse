@@ -2,12 +2,14 @@
 
 module ImportScripts
   class LookupContainer
+
+    attr_accessor :users
+
     def initialize
       puts 'Loading existing groups...'
       @groups = GroupCustomField.where(name: 'import_id').pluck(:value, :group_id).to_h
 
-      puts 'Loading existing users...'
-      @users = UserCustomField.where(name: 'import_id').pluck(:value, :user_id).to_h
+      fetch_users
 
       puts 'Loading existing categories...'
       @categories = CategoryCustomField.where(name: 'import_id').pluck(:value, :category_id).to_h
@@ -24,6 +26,11 @@ module ImportScripts
           url: Post.url(p[3], p[1], p[2])
         }
       end
+    end
+
+    def fetch_users
+      puts 'Loading existing users...'
+      @users = UserCustomField.where(name: 'import_id').pluck(:value, :user_id).to_h
     end
 
     # Get the Discourse Post id based on the id of the source record

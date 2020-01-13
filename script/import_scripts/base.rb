@@ -21,6 +21,8 @@ module ImportScripts; end
 
 class ImportScripts::Base
 
+  attr_accessor :lookup
+
   def initialize
     preload_i18n
 
@@ -33,6 +35,10 @@ class ImportScripts::Base
     @start_times = { import: Time.now }
     @skip_updates = false
     @next_category_color_index = {}
+  end
+
+  def relookup_users
+    @lookup.fetch_users
   end
 
   def preload_i18n
@@ -243,7 +249,6 @@ class ImportScripts::Base
     skipped = 0
     failed = 0
     total = opts[:total] || results.count
-
     results.each do |result|
       u = yield(result)
 
@@ -276,6 +281,7 @@ class ImportScripts::Base
       end
 
       print_status(created + skipped + failed + (opts[:offset] || 0), total, get_start_time("users"))
+      print "[s:#{skipped}, f:#{failed}, c: #{created}] "
     end
 
     [created, skipped]
